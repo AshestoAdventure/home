@@ -128,7 +128,47 @@
                 loadChapter(currentChapterIndex + 1);
             }
         };
+        // Add smooth scroll to top when changing chapters
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
 
+        // Store the original onclick functions
+        const originalPrevClick = prevChapterBtn.onclick;
+        const originalNextClick = nextChapterBtn.onclick;
+
+        // Wrap the original functions with scroll to top
+        prevChapterBtn.onclick = () => {
+            if (originalPrevClick) originalPrevClick();
+            scrollToTop();
+        };
+
+        nextChapterBtn.onclick = () => {
+            if (originalNextClick) originalNextClick();
+            scrollToTop();
+        };
+
+        // Also add scroll to top when clicking chapter items
+        const originalRenderChapters = renderChapters;
+        renderChapters = function() {
+            originalRenderChapters();
+            // Add scroll to top for all chapter items
+            document.querySelectorAll('.chapter-item').forEach(item => {
+                const originalOnClick = item.onclick;
+                item.onclick = () => {
+                    if (originalOnClick) originalOnClick();
+                    scrollToTop();
+                };
+            });
+        };
+
+        // Re-render chapters to apply the new click handlers
+        if (chapters.length > 0) {
+            renderChapters();
+        }
         init();
     </script>
 </body>
