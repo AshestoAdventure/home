@@ -1,127 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashes to Adventure - Light Novel</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f5f5f5; color: #333; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        header { background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%); color: white; padding: 2rem 0; text-align: center; border-radius: 0 0 10px 10px; margin-bottom: 2rem; }
-        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .main-content { display: flex; flex-wrap: wrap; gap: 2rem; }
-        .chapters-list { flex: 1; min-width: 300px; background: white; border-radius: 10px; padding: 1.5rem; }
-        .chapters-list h2 { margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #8B4513; }
-        .chapter-item { padding: 1rem; border-bottom: 1px solid #eee; cursor: pointer; display: flex; justify-content: space-between; }
-        .chapter-item:hover { background-color: #f9f9f9; }
-        .chapter-item.latest { background-color: #f5e9dc; border-left: 4px solid #D2691E; }
-        .quick-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
-        .action-btn { flex: 1; min-width: 150px; padding: 0.8rem 1.2rem; background: #8B4513; color: white; border: none; border-radius: 5px; cursor: pointer; text-align: center; font-weight: 600; transition: all 0.3s ease; }
-        .action-btn:hover { background: #D2691E; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
-        .chapter-content { flex: 2; min-width: 300px; background: white; border-radius: 10px; padding: 2rem; }
-        .chapter-text { line-height: 1.8; font-size: 1.1rem; }
-        .chapter-text p { margin-bottom: 1.5rem; }
-        .chapter-text .narrator { font-style: italic; color: #8B4513; margin-bottom: 1rem; padding-left: 1rem; border-left: 3px solid #D2691E; }
-        .chapter-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; }
-        .nav-btn { padding: 0.7rem 1.5rem; background: #f0f0f0; border: none; border-radius: 5px; cursor: pointer; }
-        .nav-btn:hover { background: #8B4513; color: white; }
-        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        footer { text-align: center; margin-top: 3rem; padding: 1.5rem; color: #777; border-top: 1px solid #eee; }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Ashes to Adventure</h1>
-            <p>A fantasy light novel series updated chapter by chapter</p>
-        </div>
-    </header>
-    
-    <div class="container">
-        <div class="main-content">
-            <div class="chapters-list">
-                <h2>Chapters</h2>
-                <div id="chapters-container">
-                    <div class="chapter-item latest">
-                        <div class="chapter-title">Chapter 1: The Ironclad Rule</div>
-                        <div class="chapter-date">Nov 5, 2023</div>
-                    </div>
-                </div>
-                
-                <div class="quick-actions">
-                    <button class="action-btn" id="read-first-btn">Read First Chapter</button>
-                    <button class="action-btn" id="read-last-btn">Read Latest Chapter</button>
-                    <button class="action-btn" id="subscribe-btn">Subscribe for Updates</button>
-                </div>
-            </div>
-            
-            <div class="chapter-content">
-                <h2 id="chapter-title">Chapter 1: The Ironclad Rule</h2>
-                <div class="chapter-text" id="chapter-text">
-                    <div class="narrator">This is a world where magic flows through the veins of every living being. Some people have it like an overflowing river, others like a leaky faucet, but the ironclad rule is this: everyone has it. And in a world where magic is currency, status, and law all rolled into one, those born with barely a drop are naturally looked down upon.</div>
-                    
-                    <p>Asahi wakes with a jolt to the sound of his father hollering.</p>
-                    
-                    <p>"Asahi! Hurry up n' wake up! The cows ain't gon' milk themselves!"</p>
-                    
-                    <p>Still half-asleep, he rubs his eyes and stumbles to the back of the hut where the cows lazily chew on grass. Bucket in hand, he starts milking. Just as the rhythm sets in, squish. Something unpleasant wiggles under his bare foot. His eyes flick down. Fresh cow dung. Of course.</p>
-                    
-                    <p>Asahi lets out a sigh so long and dramatic it could have won him an award.</p>
-                    
-                    <p>Suddenly, noise erupts from the village square. People gather on both sides of the muddy road, gasping and whispering like they have just seen a god descend.</p>
-                    
-                    <p>Rolling into view is a grand carriage, polished wood gleaming even under the dusty sun. A knight in shining armor sits at the front, reins in hand, face stoic enough to scare flies away. The carriage windows are shut tight, hiding whoever sits inside.</p>
-                    
-                    <p>Asahi's eyes follow it with quiet envy.</p>
-                    
-                    <p>"Must be nice to be born into nobility. I wonder which family that belongs to."</p>
-                    
-                    <p>He is so lost in thought that he does not notice the trail of dung he has smeared across the ground until</p>
-                    
-                    <p>"Asahi! What is this mess?!" his mother yells.</p>
-                    
-                    <p>He turns. Sure enough, the yard looks like a battlefield of stink.</p>
-                    
-                    <p>"I'm sorry, I'll clean it right now!"</p>
-                    
-                    <p><em>More chapters coming soon...</em></p>
-                </div>
-                
-                <div class="chapter-nav">
-                    <button class="nav-btn" id="prev-chapter" disabled>← Previous Chapter</button>
-                    <button class="nav-btn" id="next-chapter" disabled>Next Chapter →</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Ashes to Adventure. All rights reserved.</p>
-        </div>
-    </footer>
+<script>
+    const chaptersContainer = document.getElementById('chapters-container');
+    const chapterTitle = document.getElementById('chapter-title');
+    const chapterText = document.getElementById('chapter-text');
+    const prevChapterBtn = document.getElementById('prev-chapter');
+    const nextChapterBtn = document.getElementById('next-chapter');
 
-    <script>
-        // Simple navigation for single chapter
-        const readFirstBtn = document.getElementById('read-first-btn');
-        const readLastBtn = document.getElementById('read-last-btn');
-        const subscribeBtn = document.getElementById('subscribe-btn');
+    let chapters = [];
+    let currentChapterIndex = 0;
 
-        readFirstBtn.addEventListener('click', () => {
-            alert('You are already reading the first chapter!');
-        });
-
-        readLastBtn.addEventListener('click', () => {
-            alert('This is the only chapter available right now!');
-        });
-
-        subscribeBtn.addEventListener('click', () => {
-            const email = prompt('Enter your email to subscribe for chapter updates:');
-            if (email) {
-                alert(`Thank you for subscribing! You'll be notified when new chapters are published.`);
+    async function init() {
+        try {
+            const response = await fetch('chapters.json');
+            const data = await response.json();
+            chapters = data.chapters;
+            renderChapters();
+            if (chapters.length > 0) {
+                loadChapter(0);
             }
+        } catch (error) {
+            chaptersContainer.innerHTML = '<p>Error loading chapters.</p>';
+        }
+    }
+
+    function renderChapters() {
+        chaptersContainer.innerHTML = '';
+        chapters.forEach((chapter, index) => {
+            const div = document.createElement('div');
+            div.className = `chapter-item ${index === currentChapterIndex ? 'latest' : ''}`;
+            div.innerHTML = `<div class="chapter-title">${chapter.title}</div>`;
+            div.onclick = () => loadChapter(index);
+            chaptersContainer.appendChild(div);
         });
-    </script>
-</body>
-</html>
+    }
+
+    async function loadChapter(index) {
+        const chapter = chapters[index];
+        chapterTitle.textContent = chapter.title;
+        chapterText.innerHTML = '<p>Loading...</p>';
+        
+        try {
+            const response = await fetch(chapter.file);
+            const content = await response.text();
+            chapterText.innerHTML = content;
+            currentChapterIndex = index;
+            updateNavigation();
+            renderChapters(); // Re-render to update highlighting
+        } catch (error) {
+            chapterText.innerHTML = '<p>Error loading chapter.</p>';
+        }
+    }
+
+    function updateNavigation() {
+        // FIXED: Previous button should go to lower index (earlier chapter)
+        prevChapterBtn.disabled = currentChapterIndex === chapters.length - 1;
+        // FIXED: Next button should go to higher index (later chapter)
+        nextChapterBtn.disabled = currentChapterIndex === 0;
+    }
+
+    // FIXED: Navigation button logic
+    prevChapterBtn.onclick = () => {
+        if (currentChapterIndex < chapters.length - 1) {
+            loadChapter(currentChapterIndex + 1);
+        }
+    };
+
+    nextChapterBtn.onclick = () => {
+        if (currentChapterIndex > 0) {
+            loadChapter(currentChapterIndex - 1);
+        }
+    };
+
+    init();
+</script>
