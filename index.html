@@ -3,248 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashes to Adventure - A Fantasy Light Novel</title>
+    <title>Ashes to Adventure - Light Novel</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #e6e6e6;
-            line-height: 1.6;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 40px 0;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            border-bottom: 2px solid #e6c300;
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            color: #f0d879;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            letter-spacing: 2px;
-        }
-        
-        .subtitle {
-            font-size: 1.3rem;
-            color: #b8b8b8;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-        
-        .chapter-list {
-            background: rgba(30, 30, 50, 0.7);
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .chapter-list h2 {
-            color: #f0d879;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #444;
-            padding-bottom: 10px;
-        }
-        
-        .chapter-item {
-            padding: 15px;
-            margin-bottom: 15px;
-            background: rgba(40, 40, 60, 0.6);
-            border-radius: 8px;
-            border-left: 4px solid #e6c300;
-            transition: all 0.3s ease;
-        }
-        
-        .chapter-item:hover {
-            background: rgba(50, 50, 70, 0.8);
-            transform: translateX(5px);
-        }
-        
-        .chapter-title {
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-        
-        .chapter-date {
-            color: #a0a0a0;
-            font-size: 0.9rem;
-        }
-        
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 12px 25px;
-            background: linear-gradient(to bottom, #e6c300, #b89400);
-            color: #1a1a2e;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .btn:hover {
-            background: linear-gradient(to bottom, #f0d879, #d4af37);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
-        }
-        
-        .btn:active {
-            transform: translateY(1px);
-        }
-        
-        .chapter-content {
-            background: rgba(30, 30, 50, 0.7);
-            border-radius: 10px;
-            padding: 30px;
-            margin-top: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            line-height: 1.8;
-        }
-        
-        .chapter-content h2 {
-            color: #f0d879;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #444;
-            padding-bottom: 10px;
-        }
-        
-        .chapter-text {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-        
-        .chapter-text p {
-            margin-bottom: 15px;
-        }
-        
-        .to-be-continued {
-            text-align: center;
-            font-style: italic;
-            color: #b89400;
-            margin-top: 30px;
-            padding: 15px;
-            border-top: 1px dashed #555;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: #888;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-            
-            .button-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn {
-                width: 80%;
-                text-align: center;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f5f5f5; color: #333; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%); color: white; padding: 2rem 0; text-align: center; border-radius: 0 0 10px 10px; margin-bottom: 2rem; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .main-content { display: flex; flex-wrap: wrap; gap: 2rem; }
+        .chapters-list { flex: 1; min-width: 300px; background: white; border-radius: 10px; padding: 1.5rem; }
+        .chapters-list h2 { margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #8B4513; }
+        .chapter-item { padding: 1rem; border-bottom: 1px solid #eee; cursor: pointer; display: flex; justify-content: space-between; }
+        .chapter-item:hover { background-color: #f9f9f9; }
+        .chapter-item.latest { background-color: #f5e9dc; border-left: 4px solid #D2691E; }
+        .chapter-content { flex: 2; min-width: 300px; background: white; border-radius: 10px; padding: 2rem; }
+        .chapter-text { line-height: 1.8; font-size: 1.1rem; }
+        .chapter-text p { margin-bottom: 1.5rem; }
+        .chapter-text .narrator { font-style: italic; color: #8B4513; margin-bottom: 1rem; padding-left: 1rem; border-left: 3px solid #D2691E; }
+        .chapter-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; }
+        .nav-btn { padding: 0.7rem 1.5rem; background: #f0f0f0; border: none; border-radius: 5px; cursor: pointer; }
+        .nav-btn:hover { background: #8B4513; color: white; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        footer { text-align: center; margin-top: 3rem; padding: 1.5rem; color: #777; border-top: 1px solid #eee; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
+    <header>
+        <div class="container">
             <h1>Ashes to Adventure</h1>
-            <p class="subtitle">A fantasy light novel series updated chapter by chapter</p>
-        </header>
-        
-        <div class="chapter-list">
-            <h2>Chapters</h2>
-            
-            <div class="chapter-item">
-                <div class="chapter-title">Chapter 1: The Ironclad Rule</div>
-                <div class="chapter-date">Nov 5, 2023</div>
+            <p>A fantasy light novel series updated chapter by chapter</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="main-content">
+            <div class="chapters-list">
+                <h2>Chapters</h2>
+                <div id="chapters-container"></div>
             </div>
             
-            <div class="chapter-item">
-                <div class="chapter-title">Chapter 2: The Spark of Embers</div>
-                <div class="chapter-date">Coming Soon</div>
-            </div>
-            
-            <div class="chapter-item">
-                <div class="chapter-title">Chapter 3: The First Flame</div>
-                <div class="chapter-date">Coming Soon</div>
-            </div>
-            
-            <div class="chapter-item">
-                <div class="chapter-title">Chapter 4: A City of Stone and Sorcery</div>
-                <div class="chapter-date">Coming Soon</div>
+            <div class="chapter-content">
+                <h2 id="chapter-title">Select a Chapter</h2>
+                <div class="chapter-text" id="chapter-text">
+                    <p>Click on a chapter from the list to start reading.</p>
+                </div>
+                <div class="chapter-nav">
+                    <button class="nav-btn" id="prev-chapter">Previous</button>
+                    <button class="nav-btn" id="next-chapter">Next</button>
+                </div>
             </div>
         </div>
-        
-        <div class="button-container">
-            <a href="#chapter1" class="btn">Read First Chapter</a>
-            <a href="#" class="btn">Read Latest Chapter</a>
-            <a href="#" class="btn">Subscribe for Updates</a>
-        </div>
-        
-        <div class="chapter-content" id="chapter1">
-            <h2>Chapter 1: The Ironclad Rule</h2>
-            
-            <div class="chapter-text">
-                <p>This is a world where magic flows through the veins of every living being. Some people have it like an overflowing river, others like a leaky faucet, but the ironclad rule is this: everyone has it. And in a world where magic is currency, status, and law all rolled into one, those born with barely a drop are naturally looked down upon.</p>
-                
-                <p>Asahi wakes with a jolt to the sound of his father hollering.</p>
-                
-                <p>"Asahi! Hurry up n' wake up! The cows ain't gon' milk themselves!"</p>
-                
-                <p>Still half-asleep, he rubs his eyes and stumbles to the back of the hut where the cows lazily chew on grass. Bucket in hand, he starts milking. Just as the rhythm sets in, squish. Something unpleasant wiggles under his bare foot. His eyes flick down. Fresh cow dung. Of course.</p>
-                
-                <p>He sighed, wiping his foot on the dry grass. Another day, another reminder of his place at the very bottom of a world built on magic. The other village children would be practicing elemental manipulation or healing spells by now, while he was stuck with chores that even the simplest magic could accomplish in seconds.</p>
-                
-                <p>As he continued milking, he couldn't help but glance toward the distant spires of the Mage Academy visible on the horizon. A place he could only dream of, reserved for those with magic strong enough to be measured. His own magical signature was so faint that the village elder had declared him "practically null" during the annual testing ceremony.</p>
-                
-                <p>Little did he know that today would be different. Today, everything would change.</p>
-            </div>
-            
-            <div class="to-be-continued">
-                To be continued...
-            </div>
-        </div>
-        
-        <footer>
-            <p>Ashes to Adventure &copy; 2023 | A Fantasy Light Novel Series</p>
-        </footer>
     </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Ashes to Adventure. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const chaptersContainer = document.getElementById('chapters-container');
+        const chapterTitle = document.getElementById('chapter-title');
+        const chapterText = document.getElementById('chapter-text');
+        const prevChapterBtn = document.getElementById('prev-chapter');
+        const nextChapterBtn = document.getElementById('next-chapter');
+
+        let chapters = [];
+        let currentChapterIndex = 0;
+
+        async function init() {
+            try {
+                const response = await fetch('chapters.json');
+                const data = await response.json();
+                chapters = data.chapters;
+                renderChapters();
+                if (chapters.length > 0) {
+                    loadChapter(0);
+                }
+            } catch (error) {
+                chaptersContainer.innerHTML = '<p>Error loading chapters.</p>';
+            }
+        }
+
+        function renderChapters() {
+            chaptersContainer.innerHTML = '';
+            chapters.forEach((chapter, index) => {
+                const div = document.createElement('div');
+                div.className = `chapter-item ${index === 0 ? 'latest' : ''}`;
+                div.innerHTML = `<div class="chapter-title">${chapter.title}</div>`;
+                div.onclick = () => loadChapter(index);
+                chaptersContainer.appendChild(div);
+            });
+        }
+
+        async function loadChapter(index) {
+            const chapter = chapters[index];
+            chapterTitle.textContent = chapter.title;
+            chapterText.innerHTML = '<p>Loading...</p>';
+            
+            try {
+                const response = await fetch(chapter.file);
+                const content = await response.text();
+                chapterText.innerHTML = content;
+                currentChapterIndex = index;
+                updateNavigation();
+            } catch (error) {
+                chapterText.innerHTML = '<p>Error loading chapter.</p>';
+            }
+        }
+
+        function updateNavigation() {
+            prevChapterBtn.disabled = currentChapterIndex === 0;
+            nextChapterBtn.disabled = currentChapterIndex === chapters.length - 1;
+        }
+
+        prevChapterBtn.onclick = () => {
+            if (currentChapterIndex > 0) {
+                loadChapter(currentChapterIndex - 1);
+            }
+        };
+
+        nextChapterBtn.onclick = () => {
+            if (currentChapterIndex < chapters.length - 1) {
+                loadChapter(currentChapterIndex + 1);
+            }
+        };
+
+        init();
+    </script>
 </body>
 </html>
