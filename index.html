@@ -47,10 +47,6 @@
         .comment-actions { display: flex; gap: 1rem; }
         .reply-btn, .like-btn { background: none; border: none; color: #8B4513; cursor: pointer; font-size: 0.9rem; }
         .reply-btn:hover, .like-btn:hover { text-decoration: underline; }
-        .replies { margin-left: 2rem; margin-top: 1rem; border-left: 2px solid #f0f0f0; padding-left: 1rem; }
-        .reply-form { margin-top: 1rem; display: none; }
-        .reply-form textarea { width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem; }
-        .reply-form button { background: #8B4513; color: white; padding: 0.5rem 1rem; border: none; border-radius: 3px; cursor: pointer; font-size: 0.9rem; margin-top: 0.5rem; }
     </style>
 </head>
 <body>
@@ -73,15 +69,15 @@
                 </div>
                 
                 <div class="quick-actions">
-                    <button class="action-btn" id="read-first-btn">Read First Chapter</button>
-                    <button class="action-btn" id="read-last-btn">Read Latest Chapter</button>
-                    <button class="action-btn" id="subscribe-btn">Subscribe for Updates</button>
+                    <button class="action-btn" onclick="alert('You are already reading the first chapter!')">Read First Chapter</button>
+                    <button class="action-btn" onclick="alert('This is the only chapter available right now!')">Read Latest Chapter</button>
+                    <button class="action-btn" onclick="subscribe()">Subscribe for Updates</button>
                 </div>
             </div>
             
             <div class="chapter-content">
-                <h2 id="chapter-title">Chapter 1: The Ironclad Rule</h2>
-                <div class="chapter-text" id="chapter-text">
+                <h2>Chapter 1: The Ironclad Rule</h2>
+                <div class="chapter-text">
                     <div class="narrator">This is a world where magic flows through the veins of every living being. Some people have it like an overflowing river, others like a leaky faucet, but the ironclad rule is this: everyone has it. And in a world where magic is currency, status, and law all rolled into one, those born with barely a drop are naturally looked down upon.</div>
                     
                     <p>Asahi wakes with a jolt to the sound of his father hollering.</p>
@@ -92,12 +88,28 @@
                     
                     <p>Asahi lets out a sigh so long and dramatic it could have won him an award.</p>
                     
-                    <p>Click on other chapters from the list to continue reading...</p>
+                    <p>Suddenly, noise erupts from the village square. People gather on both sides of the muddy road, gasping and whispering like they have just seen a god descend.</p>
+                    
+                    <p>Rolling into view is a grand carriage, polished wood gleaming even under the dusty sun. A knight in shining armor sits at the front, reins in hand, face stoic enough to scare flies away. The carriage windows are shut tight, hiding whoever sits inside.</p>
+                    
+                    <p>Asahi's eyes follow it with quiet envy.</p>
+                    
+                    <p>"Must be nice to be born into nobility. I wonder which family that belongs to."</p>
+                    
+                    <p>He is so lost in thought that he does not notice the trail of dung he has smeared across the ground until</p>
+                    
+                    <p>"Asahi! What is this mess?!" his mother yells.</p>
+                    
+                    <p>He turns. Sure enough, the yard looks like a battlefield of stink.</p>
+                    
+                    <p>"I'm sorry, I'll clean it right now!"</p>
+                    
+                    <p><em>More chapters coming soon! This is just the beginning of Asahi's adventure...</em></p>
                 </div>
                 
                 <div class="chapter-nav">
-                    <button class="nav-btn" id="prev-chapter" disabled>← Previous Chapter</button>
-                    <button class="nav-btn" id="next-chapter" disabled>Next Chapter →</button>
+                    <button class="nav-btn" disabled>← Previous Chapter</button>
+                    <button class="nav-btn" disabled>Next Chapter →</button>
                 </div>
 
                 <!-- Comments Section -->
@@ -144,30 +156,21 @@
     </footer>
 
     <script>
-        // Simple working version - no file loading errors
-        const chaptersContainer = document.getElementById('chapters-container');
-        const chapterTitle = document.getElementById('chapter-title');
-        const chapterText = document.getElementById('chapter-text');
-        const prevChapterBtn = document.getElementById('prev-chapter');
-        const nextChapterBtn = document.getElementById('next-chapter');
-        const readFirstBtn = document.getElementById('read-first-btn');
-        const readLastBtn = document.getElementById('read-last-btn');
-        const subscribeBtn = document.getElementById('subscribe-btn');
-        const commentsContainer = document.getElementById('comments-container');
+        // Simple comment system for single chapter
         const commentText = document.getElementById('comment-text');
         const postCommentBtn = document.getElementById('post-comment-btn');
+        const commentsContainer = document.getElementById('comments-container');
         const emojiBtns = document.querySelectorAll('.emoji-btn');
 
-        // Sample chapters data
-        const chapters = [
-            { id: 1, title: "Chapter 1: The Ironclad Rule", date: "2023-11-05" },
-            { id: 2, title: "Chapter 2: The Beginning of a Journey", date: "2023-11-12" },
-            { id: 3, title: "Chapter 3: Into the Beast's Layer", date: "2023-11-19" },
-            { id: 4, title: "Chapter 4: By a Thread", date: "2023-11-26" }
+        let comments = JSON.parse(localStorage.getItem('ashesComments_ch1')) || [
+            {
+                id: 1,
+                author: 'Reader',
+                content: 'Great start to the story! Can\'t wait to read more chapters! 😊',
+                date: new Date().toISOString(),
+                likes: 2
+            }
         ];
-
-        let currentChapterIndex = 0;
-        let comments = JSON.parse(localStorage.getItem('ashesComments')) || {1: []};
 
         // Emoji picker
         emojiBtns.forEach(btn => {
@@ -182,35 +185,29 @@
             const text = commentText.value.trim();
             if (!text) return;
 
-            const chapterId = 1; // For demo, using chapter 1
             const comment = {
                 id: Date.now(),
                 author: 'Reader',
                 content: text,
                 date: new Date().toISOString(),
-                likes: 0,
-                replies: []
+                likes: 0
             };
 
-            if (!comments[chapterId]) {
-                comments[chapterId] = [];
-            }
-
-            comments[chapterId].unshift(comment);
-            localStorage.setItem('ashesComments', JSON.stringify(comments));
-            renderComments(chapterId);
+            comments.unshift(comment);
+            localStorage.setItem('ashesComments_ch1', JSON.stringify(comments));
+            renderComments();
             commentText.value = '';
         });
 
-        function renderComments(chapterId) {
+        function renderComments() {
             commentsContainer.innerHTML = '';
             
-            if (!comments[chapterId] || comments[chapterId].length === 0) {
+            if (comments.length === 0) {
                 commentsContainer.innerHTML = '<p>No comments yet. Be the first to share your thoughts!</p>';
                 return;
             }
 
-            comments[chapterId].forEach(comment => {
+            comments.forEach(comment => {
                 const commentEl = document.createElement('div');
                 commentEl.className = 'comment';
                 commentEl.innerHTML = `
@@ -220,12 +217,23 @@
                     </div>
                     <div class="comment-content">${comment.content}</div>
                     <div class="comment-actions">
-                        <button class="like-btn">👍 ${comment.likes || 0}</button>
+                        <button class="like-btn" onclick="likeComment(${comment.id})">👍 ${comment.likes || 0}</button>
                         <button class="reply-btn">Reply</button>
                     </div>
                 `;
                 commentsContainer.appendChild(commentEl);
             });
+        }
+
+        function likeComment(commentId) {
+            comments = comments.map(comment => {
+                if (comment.id === commentId) {
+                    return { ...comment, likes: (comment.likes || 0) + 1 };
+                }
+                return comment;
+            });
+            localStorage.setItem('ashesComments_ch1', JSON.stringify(comments));
+            renderComments();
         }
 
         function formatDate(dateString) {
@@ -241,24 +249,15 @@
             return date.toLocaleDateString(undefined, options);
         }
 
-        // Navigation buttons
-        readFirstBtn.addEventListener('click', () => {
-            alert('First chapter loaded!');
-        });
-
-        readLastBtn.addEventListener('click', () => {
-            alert('Latest chapter loaded!');
-        });
-
-        subscribeBtn.addEventListener('click', () => {
+        function subscribe() {
             const email = prompt('Enter your email to subscribe for chapter updates:');
             if (email) {
                 alert(`Thank you for subscribing! You'll be notified when new chapters are published.`);
             }
-        });
+        }
 
         // Load initial comments
-        renderComments(1);
+        renderComments();
     </script>
 </body>
 </html>
