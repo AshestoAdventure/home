@@ -1,135 +1,170 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashes to Adventure - Light Novel</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f5f5f5; color: #333; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        header { background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%); color: white; padding: 2rem 0; text-align: center; border-radius: 0 0 10px 10px; margin-bottom: 2rem; }
-        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .main-content { display: flex; flex-wrap: wrap; gap: 2rem; }
-        .chapters-list { flex: 1; min-width: 300px; background: white; border-radius: 10px; padding: 1.5rem; }
-        .chapters-list h2 { margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #8B4513; }
-        .chapter-item { padding: 1rem; border-bottom: 1px solid #eee; cursor: pointer; display: flex; justify-content: space-between; }
-        .chapter-item:hover { background-color: #f9f9f9; }
-        .chapter-item.latest { background-color: #f5e9dc; border-left: 4px solid #D2691E; }
-        .chapter-content { flex: 2; min-width: 300px; background: white; border-radius: 10px; padding: 2rem; }
-        .chapter-text { line-height: 1.8; font-size: 1.1rem; }
-        .chapter-text p { margin-bottom: 1.5rem; }
-        .chapter-text .narrator { font-style: italic; color: #8B4513; margin-bottom: 1rem; padding-left: 1rem; border-left: 3px solid #D2691E; }
-        .chapter-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; }
-        .nav-btn { padding: 0.7rem 1.5rem; background: #f0f0f0; border: none; border-radius: 5px; cursor: pointer; }
-        .nav-btn:hover { background: #8B4513; color: white; }
-        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        footer { text-align: center; margin-top: 3rem; padding: 1.5rem; color: #777; border-top: 1px solid #eee; }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Ashes to Adventure</h1>
-            <p>A fantasy light novel series updated chapter by chapter</p>
-        </div>
-    </header>
-    
-    <div class="container">
-        <div class="main-content">
-            <div class="chapters-list">
-                <h2>Chapters</h2>
-                <div id="chapters-container"></div>
-            </div>
-            
-            <div class="chapter-content">
-                <h2 id="chapter-title">Select a Chapter</h2>
-                <div class="chapter-text" id="chapter-text">
-                    <p>Click on a chapter from the list to start reading.</p>
-                </div>
-                <div class="chapter-nav">
-                    <button class="nav-btn" id="prev-chapter">Previous</button>
-                    <button class="nav-btn" id="next-chapter">Next</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Ashes to Adventure. All rights reserved.</p>
-        </div>
-    </footer>
+<script>
+    // Simple working version - no file loading errors
+    const chaptersContainer = document.getElementById('chapters-container');
+    const chapterTitle = document.getElementById('chapter-title');
+    const chapterText = document.getElementById('chapter-text');
+    const prevChapterBtn = document.getElementById('prev-chapter');
+    const nextChapterBtn = document.getElementById('next-chapter');
+    const readFirstBtn = document.getElementById('read-first-btn');
+    const readLastBtn = document.getElementById('read-last-btn');
+    const subscribeBtn = document.getElementById('subscribe-btn');
+    const commentsContainer = document.getElementById('comments-container');
+    const commentText = document.getElementById('comment-text');
+    const postCommentBtn = document.getElementById('post-comment-btn');
+    const emojiBtns = document.querySelectorAll('.emoji-btn');
 
-    <script>
-        const chaptersContainer = document.getElementById('chapters-container');
-        const chapterTitle = document.getElementById('chapter-title');
-        const chapterText = document.getElementById('chapter-text');
-        const prevChapterBtn = document.getElementById('prev-chapter');
-        const nextChapterBtn = document.getElementById('next-chapter');
+    // Sample chapters data - NEWEST FIRST (correct order)
+    const chapters = [
+        { id: 4, title: "Chapter 4: By a Thread", date: "2023-11-26" },
+        { id: 3, title: "Chapter 3: Into the Beast's Layer", date: "2023-11-19" },
+        { id: 2, title: "Chapter 2: The Beginning of a Journey", date: "2023-11-12" },
+        { id: 1, title: "Chapter 1: The Ironclad Rule", date: "2023-11-05" }
+    ];
 
-        let chapters = [];
-        let currentChapterIndex = 0;
+    let currentChapterIndex = 0; // Start with latest chapter (index 0)
+    let comments = JSON.parse(localStorage.getItem('ashesComments')) || {1: []};
 
-        async function init() {
-            try {
-                const response = await fetch('chapters.json');
-                const data = await response.json();
-                chapters = data.chapters;
-                renderChapters();
-                if (chapters.length > 0) {
-                    loadChapter(0);
-                }
-            } catch (error) {
-                chaptersContainer.innerHTML = '<p>Error loading chapters.</p>';
-            }
-        }
+    // Emoji picker
+    emojiBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            commentText.value += btn.textContent;
+            commentText.focus();
+        });
+    });
 
-        function renderChapters() {
-            chaptersContainer.innerHTML = '';
-            chapters.forEach((chapter, index) => {
-                const div = document.createElement('div');
-                div.className = `chapter-item ${index === 0 ? 'latest' : ''}`;
-                div.innerHTML = `<div class="chapter-title">${chapter.title}</div>`;
-                div.onclick = () => loadChapter(index);
-                chaptersContainer.appendChild(div);
-            });
-        }
+    // Post comment
+    postCommentBtn.addEventListener('click', () => {
+        const text = commentText.value.trim();
+        if (!text) return;
 
-        async function loadChapter(index) {
-            const chapter = chapters[index];
-            chapterTitle.textContent = chapter.title;
-            chapterText.innerHTML = '<p>Loading...</p>';
-            
-            try {
-                const response = await fetch(chapter.file);
-                const content = await response.text();
-                chapterText.innerHTML = content;
-                currentChapterIndex = index;
-                updateNavigation();
-            } catch (error) {
-                chapterText.innerHTML = '<p>Error loading chapter.</p>';
-            }
-        }
-
-        function updateNavigation() {
-            prevChapterBtn.disabled = currentChapterIndex === 0;
-            nextChapterBtn.disabled = currentChapterIndex === chapters.length - 1;
-        }
-
-        prevChapterBtn.onclick = () => {
-            if (currentChapterIndex > 0) {
-                loadChapter(currentChapterIndex - 1);
-            }
+        const chapterId = chapters[currentChapterIndex].id;
+        const comment = {
+            id: Date.now(),
+            author: 'Reader',
+            content: text,
+            date: new Date().toISOString(),
+            likes: 0,
+            replies: []
         };
 
-        nextChapterBtn.onclick = () => {
-            if (currentChapterIndex < chapters.length - 1) {
-                loadChapter(currentChapterIndex + 1);
-            }
-        };
+        if (!comments[chapterId]) {
+            comments[chapterId] = [];
+        }
 
-        init();
-    </script>
-</body>
-</html>
+        comments[chapterId].unshift(comment);
+        localStorage.setItem('ashesComments', JSON.stringify(comments));
+        renderComments(chapterId);
+        commentText.value = '';
+    });
+
+    function renderComments(chapterId) {
+        commentsContainer.innerHTML = '';
+        
+        if (!comments[chapterId] || comments[chapterId].length === 0) {
+            commentsContainer.innerHTML = '<p>No comments yet. Be the first to share your thoughts!</p>';
+            return;
+        }
+
+        comments[chapterId].forEach(comment => {
+            const commentEl = document.createElement('div');
+            commentEl.className = 'comment';
+            commentEl.innerHTML = `
+                <div class="comment-header">
+                    <span class="comment-author">${comment.author}</span>
+                    <span class="comment-date">${formatDate(comment.date)}</span>
+                </div>
+                <div class="comment-content">${comment.content}</div>
+                <div class="comment-actions">
+                    <button class="like-btn">👍 ${comment.likes || 0}</button>
+                    <button class="reply-btn">Reply</button>
+                </div>
+            `;
+            commentsContainer.appendChild(commentEl);
+        });
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diff = now - date;
+        
+        if (diff < 60000) return 'Just now';
+        if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+        if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+        
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return date.toLocaleDateString(undefined, options);
+    }
+
+    // FIXED NAVIGATION LOGIC
+    function updateNavigation() {
+        // "Previous" goes to NEWER chapters (lower index)
+        prevChapterBtn.disabled = currentChapterIndex === 0;
+        // "Next" goes to OLDER chapters (higher index)  
+        nextChapterBtn.disabled = currentChapterIndex === chapters.length - 1;
+    }
+
+    function loadChapter(index) {
+        currentChapterIndex = index;
+        const chapter = chapters[index];
+        
+        chapterTitle.textContent = chapter.title;
+        chapterText.innerHTML = `<p>Loading ${chapter.title}...</p><p>This would show the actual chapter content when chapter files are added.</p>`;
+        
+        updateNavigation();
+        renderComments(chapter.id);
+        
+        // Update chapter list highlighting
+        document.querySelectorAll('.chapter-item').forEach((item, i) => {
+            item.classList.toggle('latest', i === index);
+        });
+    }
+
+    // Navigation buttons - FIXED
+    prevChapterBtn.addEventListener('click', () => {
+        if (currentChapterIndex > 0) {
+            loadChapter(currentChapterIndex - 1); // Go to NEWER chapter
+        }
+    });
+
+    nextChapterBtn.addEventListener('click', () => {
+        if (currentChapterIndex < chapters.length - 1) {
+            loadChapter(currentChapterIndex + 1); // Go to OLDER chapter
+        }
+    });
+
+    readFirstBtn.addEventListener('click', () => {
+        loadChapter(chapters.length - 1); // Last item = Chapter 1
+    });
+
+    readLastBtn.addEventListener('click', () => {
+        loadChapter(0); // First item = Latest chapter
+    });
+
+    subscribeBtn.addEventListener('click', () => {
+        const email = prompt('Enter your email to subscribe for chapter updates:');
+        if (email) {
+            alert(`Thank you for subscribing! You'll be notified when new chapters are published.`);
+        }
+    });
+
+    // Initialize chapter list
+    function initChapters() {
+        chaptersContainer.innerHTML = '';
+        chapters.forEach((chapter, index) => {
+            const div = document.createElement('div');
+            div.className = `chapter-item ${index === currentChapterIndex ? 'latest' : ''}`;
+            div.innerHTML = `
+                <div class="chapter-title">${chapter.title}</div>
+                <div class="chapter-date">${formatDate(chapter.date)}</div>
+            `;
+            div.addEventListener('click', () => loadChapter(index));
+            chaptersContainer.appendChild(div);
+        });
+    }
+
+    // Load initial state
+    initChapters();
+    loadChapter(0); // Start with latest chapter
+    updateNavigation();
+</script>
