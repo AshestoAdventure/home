@@ -28,25 +28,6 @@
         .nav-btn:hover { background: #8B4513; color: white; }
         .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         footer { text-align: center; margin-top: 3rem; padding: 1.5rem; color: #777; border-top: 1px solid #eee; }
-        
-        /* Comments Section */
-        .comments-section { margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #eee; }
-        .comments-section h3 { margin-bottom: 1.5rem; color: #8B4513; }
-        .comment-form { background: #f9f9f9; padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; }
-        .comment-form textarea { width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 100px; margin-bottom: 1rem; font-size: 1rem; }
-        .comment-form button { background: #8B4513; color: white; padding: 0.7rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; }
-        .comment-form button:hover { background: #D2691E; }
-        .emoji-picker { margin-bottom: 1rem; }
-        .emoji-btn { background: none; border: 1px solid #ddd; padding: 0.3rem 0.6rem; margin-right: 0.5rem; border-radius: 3px; cursor: pointer; font-size: 1.2rem; }
-        .emoji-btn:hover { background: #f0f0f0; }
-        .comment { background: white; padding: 1.5rem; border-radius: 10px; border: 1px solid #eee; margin-bottom: 1rem; }
-        .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .comment-author { font-weight: 600; color: #8B4513; }
-        .comment-date { color: #777; font-size: 0.9rem; }
-        .comment-content { margin-bottom: 1rem; line-height: 1.6; }
-        .comment-actions { display: flex; gap: 1rem; }
-        .reply-btn, .like-btn { background: none; border: none; color: #8B4513; cursor: pointer; font-size: 0.9rem; }
-        .reply-btn:hover, .like-btn:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -69,15 +50,15 @@
                 </div>
                 
                 <div class="quick-actions">
-                    <button class="action-btn" onclick="alert('You are already reading the first chapter!')">Read First Chapter</button>
-                    <button class="action-btn" onclick="alert('This is the only chapter available right now!')">Read Latest Chapter</button>
-                    <button class="action-btn" onclick="subscribe()">Subscribe for Updates</button>
+                    <button class="action-btn" id="read-first-btn">Read First Chapter</button>
+                    <button class="action-btn" id="read-last-btn">Read Latest Chapter</button>
+                    <button class="action-btn" id="subscribe-btn">Subscribe for Updates</button>
                 </div>
             </div>
             
             <div class="chapter-content">
-                <h2>Chapter 1: The Ironclad Rule</h2>
-                <div class="chapter-text">
+                <h2 id="chapter-title">Chapter 1: The Ironclad Rule</h2>
+                <div class="chapter-text" id="chapter-text">
                     <div class="narrator">This is a world where magic flows through the veins of every living being. Some people have it like an overflowing river, others like a leaky faucet, but the ironclad rule is this: everyone has it. And in a world where magic is currency, status, and law all rolled into one, those born with barely a drop are naturally looked down upon.</div>
                     
                     <p>Asahi wakes with a jolt to the sound of his father hollering.</p>
@@ -104,46 +85,12 @@
                     
                     <p>"I'm sorry, I'll clean it right now!"</p>
                     
-                    <p><em>More chapters coming soon! This is just the beginning of Asahi's adventure...</em></p>
+                    <p><em>More chapters coming soon...</em></p>
                 </div>
                 
                 <div class="chapter-nav">
-                    <button class="nav-btn" disabled>← Previous Chapter</button>
-                    <button class="nav-btn" disabled>Next Chapter →</button>
-                </div>
-
-                <!-- Comments Section -->
-                <div class="comments-section">
-                    <h3>Discussion</h3>
-                    
-                    <div class="comment-form">
-                        <div class="emoji-picker">
-                            <button type="button" class="emoji-btn">😊</button>
-                            <button type="button" class="emoji-btn">😂</button>
-                            <button type="button" class="emoji-btn">😍</button>
-                            <button type="button" class="emoji-btn">😮</button>
-                            <button type="button" class="emoji-btn">😢</button>
-                            <button type="button" class="emoji-btn">👍</button>
-                            <button type="button" class="emoji-btn">❤️</button>
-                            <button type="button" class="emoji-btn">🔥</button>
-                        </div>
-                        <textarea id="comment-text" placeholder="Share your thoughts about this chapter..."></textarea>
-                        <button id="post-comment-btn">Post Comment</button>
-                    </div>
-                    
-                    <div class="comments-list" id="comments-container">
-                        <div class="comment">
-                            <div class="comment-header">
-                                <span class="comment-author">Reader</span>
-                                <span class="comment-date">Just now</span>
-                            </div>
-                            <div class="comment-content">Great start to the story! Can't wait to read more chapters! 😊</div>
-                            <div class="comment-actions">
-                                <button class="like-btn">👍 2</button>
-                                <button class="reply-btn">Reply</button>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="nav-btn" id="prev-chapter" disabled>← Previous Chapter</button>
+                    <button class="nav-btn" id="next-chapter" disabled>Next Chapter →</button>
                 </div>
             </div>
         </div>
@@ -156,108 +103,25 @@
     </footer>
 
     <script>
-        // Simple comment system for single chapter
-        const commentText = document.getElementById('comment-text');
-        const postCommentBtn = document.getElementById('post-comment-btn');
-        const commentsContainer = document.getElementById('comments-container');
-        const emojiBtns = document.querySelectorAll('.emoji-btn');
+        // Simple navigation for single chapter
+        const readFirstBtn = document.getElementById('read-first-btn');
+        const readLastBtn = document.getElementById('read-last-btn');
+        const subscribeBtn = document.getElementById('subscribe-btn');
 
-        let comments = JSON.parse(localStorage.getItem('ashesComments_ch1')) || [
-            {
-                id: 1,
-                author: 'Reader',
-                content: 'Great start to the story! Can\'t wait to read more chapters! 😊',
-                date: new Date().toISOString(),
-                likes: 2
-            }
-        ];
-
-        // Emoji picker
-        emojiBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                commentText.value += btn.textContent;
-                commentText.focus();
-            });
+        readFirstBtn.addEventListener('click', () => {
+            alert('You are already reading the first chapter!');
         });
 
-        // Post comment
-        postCommentBtn.addEventListener('click', () => {
-            const text = commentText.value.trim();
-            if (!text) return;
-
-            const comment = {
-                id: Date.now(),
-                author: 'Reader',
-                content: text,
-                date: new Date().toISOString(),
-                likes: 0
-            };
-
-            comments.unshift(comment);
-            localStorage.setItem('ashesComments_ch1', JSON.stringify(comments));
-            renderComments();
-            commentText.value = '';
+        readLastBtn.addEventListener('click', () => {
+            alert('This is the only chapter available right now!');
         });
 
-        function renderComments() {
-            commentsContainer.innerHTML = '';
-            
-            if (comments.length === 0) {
-                commentsContainer.innerHTML = '<p>No comments yet. Be the first to share your thoughts!</p>';
-                return;
-            }
-
-            comments.forEach(comment => {
-                const commentEl = document.createElement('div');
-                commentEl.className = 'comment';
-                commentEl.innerHTML = `
-                    <div class="comment-header">
-                        <span class="comment-author">${comment.author}</span>
-                        <span class="comment-date">${formatDate(comment.date)}</span>
-                    </div>
-                    <div class="comment-content">${comment.content}</div>
-                    <div class="comment-actions">
-                        <button class="like-btn" onclick="likeComment(${comment.id})">👍 ${comment.likes || 0}</button>
-                        <button class="reply-btn">Reply</button>
-                    </div>
-                `;
-                commentsContainer.appendChild(commentEl);
-            });
-        }
-
-        function likeComment(commentId) {
-            comments = comments.map(comment => {
-                if (comment.id === commentId) {
-                    return { ...comment, likes: (comment.likes || 0) + 1 };
-                }
-                return comment;
-            });
-            localStorage.setItem('ashesComments_ch1', JSON.stringify(comments));
-            renderComments();
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const now = new Date();
-            const diff = now - date;
-            
-            if (diff < 60000) return 'Just now';
-            if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
-            if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
-            
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return date.toLocaleDateString(undefined, options);
-        }
-
-        function subscribe() {
+        subscribeBtn.addEventListener('click', () => {
             const email = prompt('Enter your email to subscribe for chapter updates:');
             if (email) {
                 alert(`Thank you for subscribing! You'll be notified when new chapters are published.`);
             }
-        }
-
-        // Load initial comments
-        renderComments();
+        });
     </script>
 </body>
 </html>
