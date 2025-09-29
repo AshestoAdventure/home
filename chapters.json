@@ -1,6 +1,12 @@
 {
   "chapters": [
     {
+      "id": 2,
+      "title": "Chapter 2: The Beginning of a Journey",
+      "date": "2023-11-12",
+      "file": "chapter-2.html"
+    },
+    {
       "id": 1,
       "title": "Chapter 1: The Ironclad Rule",
       "date": "2023-11-05",
