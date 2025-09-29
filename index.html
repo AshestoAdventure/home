@@ -96,7 +96,7 @@
             });
         }
 
-        async function loadChapter(index) {
+               async function loadChapter(index) {
             const chapter = chapters[index];
             chapterTitle.textContent = chapter.title;
             chapterText.innerHTML = '<p>Loading...</p>';
@@ -107,11 +107,15 @@
                 chapterText.innerHTML = content;
                 currentChapterIndex = index;
                 updateNavigation();
+                
+                // Scroll AFTER the content is loaded
+                setTimeout(() => {
+                    scrollToTop();
+                }, 100);
             } catch (error) {
                 chapterText.innerHTML = '<p>Error loading chapter.</p>';
             }
         }
-
         function updateNavigation() {
             prevChapterBtn.disabled = currentChapterIndex === 0;
             nextChapterBtn.disabled = currentChapterIndex === chapters.length - 1;
