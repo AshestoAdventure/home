@@ -129,25 +129,27 @@
             }
         };
                 // Add smooth scroll to top when changing chapters - mobile compatible
+                // Add smooth scroll to chapter content when changing chapters - mobile compatible
         function scrollToTop() {
-            // Method 1: Scroll to body
-            document.body.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            // Method 2: Scroll to document element
-            document.documentElement.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            // Method 3: Direct assignment as fallback
-            setTimeout(() => {
+            const chapterContent = document.querySelector('.chapter-content');
+            if (chapterContent) {
+                // Scroll the chapter content into view
+                chapterContent.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+                
+                // Additional fallbacks
+                setTimeout(() => {
+                    chapterContent.scrollIntoView({ block: 'start' });
+                    window.scrollTo(0, chapterContent.offsetTop);
+                }, 100);
+            } else {
+                // Fallback to original scroll to top
                 window.scrollTo(0, 0);
                 document.documentElement.scrollTop = 0;
                 document.body.scrollTop = 0;
-            }, 100);
+            }
         }
 
         // Store the original onclick functions
