@@ -1,6 +1,30 @@
 {
   "chapters": [
     {
+      "id": 12,
+      "title": "Chapter 12: Training With The Witch",
+      "date": "2024-01-14",
+      "file": "chapter-12.html"
+    },
+    {
+      "id": 11,
+      "title": "Chapter 11: The Great Witch",
+      "date": "2024-01-07",
+      "file": "chapter-11.html"
+    },
+    {
+      "id": 10,
+      "title": "Chapter 10: The Arch Arachnid",
+      "date": "2023-12-31",
+      "file": "chapter-10.html"
+    },
+    {
+      "id": 9,
+      "title": "Chapter 9: Deadly Training",
+      "date": "2023-12-24",
+      "file": "chapter-9.html"
+    },
+    {
       "id": 8,
       "title": "Chapter 8: Off We Go",
       "date": "2023-12-17",
